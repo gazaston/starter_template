@@ -1,0 +1,255 @@
+%section.container
+  .content
+    .wrapper
+      %h1#main Styleguide
+      %p The purpose of this HTML is to help determine what default settings are, and to make sure that all possible HTML Elements are included in this HTML so as to not miss any possible Elements when designing a site.
+      %hr/
+      %h2#headings Colors
+      .palette
+        %h4 Palette
+        .color.color-1
+          %small $color-1
+        .color.color-2
+          %small $color-2
+        .color.color-3
+          %small $color-3
+        .color.color-4
+          %small $color-4
+        .color.color-5
+          %small $color-5
+      .palette
+        %h4 Tints
+        .color.base-accent-color
+          %small $color-1
+        .color.base-accent-color.tint-half
+          %small tint($color-1,50)
+        .color.base-accent-color.tint-quarter
+          %small tint($color-1,75)
+        .color.base-accent-color.tint-tenth
+          %small tint($color-1,90)
+      .palette
+        %h4 Shades
+        .color.base-accent-color
+          %small $color-1
+        .color.base-accent-color.shade-half
+          %small shade($color-1,50)
+        .color.base-accent-color.shade-quarter
+          %small shade($color-1,75)
+        .color.base-accent-color.shade-tenth
+          %small shade($color-1,90)
+      %hr/
+      %h2#headings Links &amp; Buttons
+      %div
+        %a{href: "#"} This is a text link.
+        %br/
+        %br/
+      %div
+        %a{href: "#", class: "small button"} .small.button
+        %br/
+        %br/
+      %div
+        %a{href: "#", class: "button"} .button
+        %br/
+        %br/
+      %div
+        %a{href: "#", class: "large button"} .large.button
+        %br/
+        %br/
+      %div
+        %a{href: "#", class: "destructive button"} .button.destructive
+        %br/
+        %br/
+      %div
+        %a{href: "#", class: "wide button"} .wide.button
+        %br/
+        %br/
+      %hr/
+      %h2#headings Headings
+      %h1 h1. Heading
+      %h2 h2. Heading
+      %h3 h3. Heading
+      %h4 h4. Heading
+      %h5 h5. Heading
+      %h6 h6. Heading
+
+      %hr/
+      %h2#flashes Flash / error messages
+      .flash-success
+        %span
+          This is a success message
+          %a{:href => "#"} with a link
+      .flash-error
+        %span
+          This is an error message
+          %a{:href => "#"} with a link
+      .flash-notice
+        %span
+          This is an notice message
+          %a{:href => "#"} with a link
+      .flash-alert
+        %span
+          This is an alert message
+          %a{:href => "#"} with a link
+      
+      %hr/
+      %h2#elements Elements
+      .panel.primary
+        %h3 Panel
+        %p Donec sed odio dui. Aenean lacinia bibendum nulla sed consectetur. Sed posuere consectetur est at lobortis. Etiam porta sem malesuada magna mollis euismod. Curabitur blandit tempus porttitor. Nulla vitae elit libero, a pharetra augue. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Maecenas faucibus mollis interdum. Nulla vitae elit libero, a pharetra augue.
+
+      %hr/
+      %h2#paragraph Paragraph
+      %p
+        Lorem ipsum dolor sit amet,
+        %a{href: "#", title: "test link"} test link
+        adipiscing elit. Nullam dignissim convallis est. Quisque aliquam. Donec faucibus. Nunc iaculis suscipit dui. Nam sit amet sem. Aliquam libero nisi, imperdiet at, tincidunt nec, gravida vehicula, nisl. Praesent mattis, massa quis luctus fermentum, turpis mi volutpat justo, eu volutpat enim diam eget metus. Maecenas ornare tortor. Donec sed tellus eget sapien fringilla nonummy. Mauris a ante. Suspendisse quam sem, consequat at, commodo vitae, feugiat in, nunc. Morbi imperdiet augue quis tellus.
+      %p
+        Lorem ipsum dolor sit amet,
+        %em emphasis
+        consectetuer adipiscing elit. Nullam dignissim convallis est. Quisque aliquam. Donec faucibus. Nunc iaculis suscipit dui. Nam sit amet sem. Aliquam libero nisi, imperdiet at, tincidunt nec, gravida vehicula, nisl. Praesent mattis, massa quis luctus fermentum, turpis mi volutpat justo, eu volutpat enim diam eget metus. Maecenas ornare tortor. Donec sed tellus eget sapien fringilla nonummy. Mauris a ante. Suspendisse quam sem, consequat at, commodo vitae, feugiat in, nunc. Morbi imperdiet augue quis tellus.
+      %hr/
+      %h3 Media
+      %figure
+        %img{alt: "Example image", src: "http://lorempixum.com/1200/600/abstract/?r"}/
+        %figcaption
+          %h4 Figure Heading
+          %p This is a placeholder image, with supporting caption.
+      %hr/
+      %h2#list_types List Types
+      %h3 Definition List
+      %dl
+        %dt Definition List Title
+        %dd This is a definition list division.
+      %h3 Ordered List
+      %ol.bulleted
+        %li List Item 1
+        %li List Item 2
+        %li List Item 3
+      %h3 Unordered List
+      %ul.bulleted
+        %li List Item 1
+        %li List Item 2
+        %li List Item 3
+      %h3 %default Ordered List
+      %ol.default
+        %li List Item 1
+        %li List Item 2
+        %li List Item 3
+      %h3 %default Unordered List
+      %ul.default
+        %li List Item 1
+        %li List Item 2
+        %li List Item 3
+      %hr/
+      %h2#form_elements Fieldsets and Form Elements
+      %fieldset
+        %p Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Nullam dignissim convallis est. Quisque aliquam. Donec faucibus. Nunc iaculis suscipit dui. Nam sit amet sem. Aliquam libero nisi, imperdiet at, tincidunt nec, gravida vehicula, nisl. Praesent mattis, massa quis luctus fermentum, turpis mi volutpat justo, eu volutpat enim diam eget metus.
+        %form
+          %h2 Form Element
+          %p Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Nullam dignissim convallis est. Quisque aliquam. Donec faucibus. Nunc iaculis suscipit dui.
+          %p
+            %label{for: "text_field"} Text Field:
+            %input#text_field{type: "text"}/
+          %p
+            %label{for: "text_area"} Text Area:
+            %textarea#text_area
+          %p
+            %label{for: "select_element"} Select Element:
+            %select{name: "select_element"}
+              %optgroup{label: "Option Group 1"}
+                %option{value: "1"} Option 1
+                %option{value: "2"} Option 2
+                %option{value: "3"} Option 3
+              %optgroup{label: "Option Group 2"}
+                %option{value: "1"} Option 1
+                %option{value: "2"} Option 2
+                %option{value: "3"} Option 3
+          %p
+            %label{for: "radio_buttons"} Radio Buttons:
+            %label
+              %input.radio{name: "radio_button", type: "radio", value: "radio_1"}/
+              Radio 1
+            %label
+              %input.radio{name: "radio_button", type: "radio", value: "radio_2"}/
+              Radio 2
+            %label
+              %input.radio{name: "radio_button", type: "radio", value: "radio_3"}/
+              Radio 3
+          %p
+            %label{for: "checkboxes"} Checkboxes:
+            %label
+              %input.checkbox{name: "checkboxes", type: "checkbox", value: "check_1"}/
+              Radio 1
+            %label
+              %input.checkbox{name: "checkboxes", type: "checkbox", value: "check_2"}/
+              Radio 2
+            %label
+              %input.checkbox{name: "checkboxes", type: "checkbox", value: "check_3"}/
+              Radio 3
+          %p
+            %label{for: "password"} Password:
+            %input.password{name: "password", type: "password"}/
+          %p
+            %label{for: "file"} File Input:
+            %input.file{name: "file", type: "file"}/
+          %p
+            %input.button{type: "submit", value: "Submit"}/
+      %hr/
+      %h2#tables Tables
+      %table{cellpadding: "0", cellspacing: "0"}
+        %tr
+          %th Table Header 1
+          %th Table Header 2
+          %th Table Header 3
+        %tr
+          %td Division 1
+          %td Division 2
+          %td Division 3
+        %tr.even
+          %td Division 1
+          %td Division 2
+          %td Division 3
+        %tr
+          %td Division 1
+          %td Division 2
+          %td Division 3
+      %hr/
+      %h2#misc Misc Stuff - abbr, acronym, pre, code, sub, sup, etc.
+      %p
+        %small This is a small element. Copyright © 1922-2011 Acme Corporation. All Rights Reserved.
+      %p
+        Lorem
+        %sup superscript
+        dolor
+        %sub subscript
+        amet, consectetuer adipiscing elit. Nullam dignissim convallis est. Quisque aliquam.
+        = succeed "." do
+          %cite cite
+        %acronym{title: "National Basketball Association"} NBA
+        Mauris a ante. 
+        %mark Suspendisse quam sem, 
+        %strike consequat at, 
+        commodo vitae, feugiat in, nunc. Morbi imperdiet augue quis tellus.
+        %abbr{title: "Avenue"} AVE
+        %p 
+          She bought
+          %del{datetime: "2005-05-30T13:00:00"} two
+          %ins{datetime: "2005-05-30T13:00:00"} five
+          pairs of shoes.
+      %pre
+        %p
+          Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Nullam dignissim convallis est. Quisque aliquam. Donec faucibus. Nunc iaculis suscipit dui. Nam sit amet sem. Aliquam libero nisi, imperdiet at, tincidunt nec, gravida vehicula, nisl. Praesent mattis, massa quis luctus fermentum, turpis mi volutpat justo, eu volutpat enim diam eget metus. Maecenas ornare tortor. Donec sed tellus eget sapien fringilla nonummy.
+          %acronym{title: "National Basketball Association"} NBA
+          Mauris a ante. Suspendisse quam sem, consequat at, commodo vitae, feugiat in, nunc. Morbi imperdiet augue quis tellus.
+          %abbr{title: "Avenue"} AVE
+      %blockquote
+        %p This stylesheet is going to help so freaking much.
+        %cite Blockquote
+      %p
+        Ooh, code. When you call the
+        %code activate()
+        method on the
+        %code robotSnowman
+        object, the eyes glow.
+      %hr/
+      

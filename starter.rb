@@ -1,0 +1,120 @@
+# Add gems
+
+gem 'haml-rails'
+gem 'bourbon'
+gem 'neat'
+gem 'startmeup'
+gem 'refills'
+gem 'bluecloth'
+gem 'font-awesome-rails'
+gem 'devise'
+gem 'simple_form'
+gem 'draper'
+gem 'figaro', '~> 1.0.0'
+gem 'cancancan'
+gem 'puma'
+gem 'nav_lynx'
+gem "paperclip", "~> 4.2"
+gem 'aws-sdk'
+gem 'sweet-alert-confirm'
+gem 'kaminari'
+
+gem_group :development do
+  gem 'better_errors'
+  gem 'binding_of_caller'
+  gem 'html2haml'
+end
+
+gem_group :test do
+  gem "email_spec"
+  gem "cucumber-rails", :require => false
+  gem 'rspec-rails', '~> 3.0.0'
+  gem 'spring'
+  gem 'simplecov'
+end
+
+gem_group :development, :test do
+  gem "byebug"
+  gem 'faker'
+  gem "database_cleaner"
+  gem 'shoulda-matchers', require: false 
+  gem 'did-you-mean', '~> 0.1.1'
+  gem "factory_girl_rails"
+end
+
+gem_group :production, :staging do
+  gem 'rails_12factor'
+end
+
+# remove turbolinks :)
+gsub_file "Gemfile", /^gem\s+["']turbolinks["'].*$/,''
+
+# specify ruby
+insert_into_file 'Gemfile', "\nruby '2.1.2'", after: "source 'https://rubygems.org'\n"
+
+# install simpleform
+run "rails generate simple_form:install"
+
+# add template file paths
+def source_paths
+  Array(super) + 
+    [File.join(File.expand_path(File.dirname(__FILE__)),'rails_root')]
+end
+
+# generate styleguide
+run "rails generate controller styleguides index"
+run "rm public/index.html"
+route "root 'styleguides#index'"
+
+# add template files
+inside 'app' do
+  inside 'views' do
+    inside 'layouts' do
+      remove_file 'application.html.erb'
+      template 'application.html.haml'
+    end
+  end
+end
+
+inside 'app' do
+  inside 'views' do
+    inside 'styleguides' do
+      remove_file 'index.html.haml'
+      copy_file 'index.html.haml'
+    end
+  end
+end
+
+inside 'app' do
+  inside 'views' do
+    inside 'shared' do
+      copy_file '_footer.html.haml'
+    end
+  end
+end
+
+inside 'app' do
+  inside 'assets' do
+    inside 'stylesheets' do
+      run "startmeup install"
+      remove_file 'application.css'
+      copy_file 'application.css.sass'
+    end
+    inside 'javascripts' do
+      remove_file 'application.js'
+      copy_file 'application.js'
+    end
+  end
+end
+
+# remove unwanted files
+inside 'app' do
+  inside 'assets' do
+    inside 'javascripts' do
+      gsub_file "application.js", /^gem\s+["']turbolinks["'].*$/,''
+    end
+  end
+end
+
+# Add Refills
+# rails generate refills:import SNIPPET

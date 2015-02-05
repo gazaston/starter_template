@@ -1,0 +1,35 @@
+!!!
+%html
+  %head
+    %title= content_for?(:title) ? content_for(:title) : "#{@app_name.humanize}"
+    = stylesheet_link_tag    'application', media: 'all'
+    = javascript_include_tag 'application'
+    /%script{:src => "//use.typekit.net/odn0jfr.js"}
+    /:javascript
+    /  try{Typekit.load();}catch(e){}
+    = csrf_meta_tags
+    %meta{content: "width=device-width, initial-scale=1, maximum-scale=1", name: "viewport"}/
+  %body{class: page_class}
+    
+    = yield
+    / =render "shared/footer"
+    / =render "shared/ga"
+
+    // :javascript
+    //   $("header").headroom({"tolerance": 10, "offset": 100});
+
+
+  -if Rails.env.development?
+    #debug
+    #params
+      / role:
+      / - if user_signed_in?
+      /   %span=current_user.role 
+      /   |
+      /   %span=current_user.type 
+      /   |
+      / - else
+      /   %span guest 
+      /   |
+          
+      =params.inspect
