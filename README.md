@@ -13,6 +13,7 @@ or for an sqlite3 database:
 TODO:
 
 * Normalize
+* Debug
 * Typekit helper?
 * Devise
 * CanCanCan
