@@ -1,6 +1,7 @@
 # Add gems
 
 gem 'haml-rails'
+gem 'normalize-rails'
 gem 'bourbon'
 gem 'neat'
 gem 'startmeup'
