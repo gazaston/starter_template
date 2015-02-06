@@ -12,16 +12,13 @@ or for an sqlite3 database:
 
 TODO:
 
-* Normalize
-* Debug
-* Typekit helper?
-* Devise
-* CanCanCan
+* Devise (add as question?)
+* CanCanCan (add as question?)
 * Cucumber
 * Rspec
 * Refills
 * Figaro
-* Github
-* Heroku
+* Github (add as question?)
+* Heroku (add as question?)
 
 …and much more.
