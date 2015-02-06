@@ -62,9 +62,11 @@ def source_paths
     [File.join(File.expand_path(File.dirname(__FILE__)),'rails_root')]
 end
 
+# remove public index.html
+remove_file "public/index.html"
+
 # generate styleguide
 run "rails generate controller styleguides index"
-run "rm public/index.html"
 route "root 'styleguides#index'"
 
 # add template files
