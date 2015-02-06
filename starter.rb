@@ -74,6 +74,9 @@ inside 'app' do
       remove_file 'application.html.erb'
       template 'application.html.haml'
     end
+    inside 'shared' do
+      copy_file '_footer.html.haml'
+    end
   end
 end
 
@@ -87,32 +90,17 @@ inside 'app' do
 end
 
 inside 'app' do
-  inside 'views' do
-    inside 'shared' do
-      copy_file '_footer.html.haml'
-    end
-  end
-end
-
-inside 'app' do
   inside 'assets' do
     inside 'stylesheets' do
       run "startmeup install"
       remove_file 'application.css'
       copy_file 'application.css.sass'
+      copy_file '_mixins.sass'
+      copy_file '_debug.sass'
     end
     inside 'javascripts' do
       remove_file 'application.js'
       copy_file 'application.js'
-    end
-  end
-end
-
-# remove unwanted files
-inside 'app' do
-  inside 'assets' do
-    inside 'javascripts' do
-      gsub_file "application.js", /^gem\s+["']turbolinks["'].*$/,''
     end
   end
 end
