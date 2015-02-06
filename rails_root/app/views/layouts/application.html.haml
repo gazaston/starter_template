@@ -4,9 +4,12 @@
     %title= content_for?(:title) ? content_for(:title) : "My App"
     = stylesheet_link_tag    'application', media: 'all'
     = javascript_include_tag 'application'
-    /%script{:src => "//use.typekit.net/odn0jfr.js"}
-    /:javascript
-    /  try{Typekit.load();}catch(e){}
+
+    / rails_starter on Typekit
+    %script{:src => "//use.typekit.net/pjz7xof.js"} 
+    :javascript
+      try{Typekit.load();}catch(e){}
+
     = csrf_meta_tags
     %meta{content: "width=device-width, initial-scale=1, maximum-scale=1", name: "viewport"}/
   %body{class: page_class}
