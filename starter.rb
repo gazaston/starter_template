@@ -105,5 +105,7 @@ inside 'app' do
   end
 end
 
+gsub_file 'app/assets/stylesheets/base/_base.sass', /^\/\/ @import grid-settings$/, "@import grid-settings"
+
 # Add Refills
 # rails generate refills:import SNIPPET
