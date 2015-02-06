@@ -66,7 +66,7 @@ end
 remove_file "public/index.html"
 
 # generate styleguide
-run "rails generate controller styleguides index"
+run "rails generate controller styleguides index --no-helper --no-assets --no-controller-specs --no-view-specs"
 route "root 'styleguides#index'"
 
 # add template files
