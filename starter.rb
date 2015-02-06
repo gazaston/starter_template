@@ -98,14 +98,14 @@ inside 'app' do
       copy_file '_mixins.sass'
       copy_file '_debug.sass'
     end
-    inside 'javascripts' do
-      remove_file 'application.js'
-      copy_file 'application.js'
-    end
   end
 end
 
+# uncomment grid-settings sass for Neat
 gsub_file 'app/assets/stylesheets/base/_base.sass', /^\/\/ @import grid-settings$/, "@import grid-settings"
+
+# remove turbolinks from application.js
+gsub_file 'app/assets/javascripts/application.js', /^\/\/\= require turbolinks$/, ""
 
 # Add Refills
 # rails generate refills:import SNIPPET
