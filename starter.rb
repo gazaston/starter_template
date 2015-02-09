@@ -103,6 +103,10 @@ inside 'app' do
   end
 end
 
+inside 'config' do
+  copy_file 'database_example.yml'
+end
+
 # uncomment grid-settings sass for Neat
 gsub_file 'app/assets/stylesheets/base/_base.sass', /^\/\/ @import grid-settings$/, "@import grid-settings"
 
