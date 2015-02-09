@@ -166,7 +166,7 @@ gsub_file 'app/assets/javascripts/application.js', /^\/\/\= require turbolinks$/
 
 def run_bundle ; end
 
-say <<-finished
+say <<-postinstall
   ============================================================================
 
   Your new Rails application "#{app_name}" is ready to go.
@@ -183,4 +183,4 @@ say <<-finished
   Remember, you can add Refills modules using generators (https://github.com/thoughtbot/refills#installation-for-ruby-on-rails)
 
   ============================================================================
-finished
+postinstall
