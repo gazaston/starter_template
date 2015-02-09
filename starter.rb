@@ -180,7 +180,7 @@ say <<-finished
 
   $ rake db:create db:migrate
 
-  Remember, you can now add Refills modules from Thoughtbot (https://github.com/thoughtbot/refills#installation-for-ruby-on-rails)
+  Remember, you can add Refills modules using generators (https://github.com/thoughtbot/refills#installation-for-ruby-on-rails)
 
   ============================================================================
 finished
