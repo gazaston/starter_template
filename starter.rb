@@ -74,6 +74,9 @@ run 'rails generate rspec:install'
 # run 'bundle binstubs rspec-core'
 run 'rails generate cucumber:install'
 
+# install figaro
+run 'figaro install' 
+
 # config rspec
 inject_into_file 'config/application.rb', :after => "class Application < Rails::Application\n" do <<-'RUBY'
   config.generators do |g|
