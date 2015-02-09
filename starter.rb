@@ -1,3 +1,16 @@
+# Create gemset
+run "rvm gemset create #{app_name}"
+
+# Add rvm files
+create_file ".ruby-gemset", "#{app_name}\n"
+create_file ".ruby-version", "#{RUBY_VERSION}"
+
+# add template file paths
+def source_paths
+  Array(super) + 
+    [File.join(File.expand_path(File.dirname(__FILE__)),'rails_root')]
+end
+
 # Add gems
 
 gem 'haml-rails'
@@ -29,7 +42,7 @@ end
 gem_group :test do
   gem "email_spec"
   gem "cucumber-rails", :require => false
-  gem 'rspec-rails', '~> 3.0.0'
+  gem 'rspec-rails', '3.1'
   gem 'spring'
   gem 'simplecov'
 end
@@ -56,17 +69,35 @@ insert_into_file 'Gemfile', "\nruby '2.1.2'", after: "source 'https://rubygems.o
 # install simpleform
 run "rails generate simple_form:install"
 
-# add template file paths
-def source_paths
-  Array(super) + 
-    [File.join(File.expand_path(File.dirname(__FILE__)),'rails_root')]
+# Install Rspec + Cucumber
+run 'rails generate rspec:install'
+# run 'bundle binstubs rspec-core'
+run 'rails generate cucumber:install'
+
+# config rspec
+inject_into_file 'config/application.rb', :after => "class Application < Rails::Application\n" do <<-'RUBY'
+  config.generators do |g|
+    g.test_framework :rspec, fixture: true
+    g.fixture_replacement :factory_girl, dir: 'spec/factories'
+    g.view_specs false
+    g.decorator_specs false
+    g.helper_specs false
+    g.stylesheets = false
+    g.javascripts = false
+    g.helper = false
+  end
+RUBY
 end
+
+# gsub_file ".rspec", /^\-\-warnings$/, "--format documentation\n"
+# gsub_file ".rspec", /^\-\-warnings$/, '--require spec_helper'
+insert_into_file '.rspec', "\n--format documentation", after: "--color"
 
 # remove public index.html
 remove_file "public/index.html"
 
 # generate styleguide
-run "rails generate controller styleguides index --no-helper --no-assets --no-controller-specs --no-view-specs"
+generate "controller", "styleguides index --no-helper --no-assets --no-view-specs --no-decorator-specs"
 route "root 'styleguides#index'"
 
 # add template files
@@ -107,6 +138,15 @@ inside 'config' do
   copy_file 'database_example.yml'
 end
 
+gsub_file 'config/database_example.yml', /^CHANGEME$/, "username: $USER"
+
+inside 'features' do
+  copy_file 'styleguide.feature'
+  inside 'step_definitions' do
+    copy_file 'styleguide_steps.rb'
+  end
+end
+
 # uncomment grid-settings sass for Neat
 gsub_file 'app/assets/stylesheets/base/_base.sass', /^\/\/ @import grid-settings$/, "@import grid-settings"
 
@@ -116,10 +156,27 @@ gsub_file 'app/assets/javascripts/application.js', /^\/\/\= require turbolinks$/
 # Add Refills
 # rails generate refills:import SNIPPET
 
-# Install Rspec + Cucumber
-run 'rails generate rspec:install'
-run 'rails generate cucumber:install'
-
 # if yes?('Install Rspec + Factory Girl? (y/n)')
   
 # end
+
+def run_bundle ; end
+
+say <<-finished
+  ============================================================================
+
+  Your new Rails application "#{app_name}" is ready to go.
+  
+  Now, run 
+
+  $ cd #{app_name}
+  $ bundle
+
+  Alter config/database_example.yml as required and run:
+
+  $ rake db:create db:migrate
+
+  Remember, you can now add Refills modules from Thoughtbot (https://github.com/thoughtbot/refills#installation-for-ruby-on-rails)
+
+  ============================================================================
+finished
