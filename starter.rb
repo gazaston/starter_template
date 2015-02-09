@@ -134,11 +134,12 @@ inside 'app' do
   end
 end
 
-inside 'config' do
-  copy_file 'database_example.yml'
+if yes?('Using PG database? (y/n)')
+  inside 'config' do
+    remove_file 'database.yml'
+    copy_file 'database_example.yml'
+  end
 end
-
-gsub_file 'config/database_example.yml', /^CHANGEME$/, "username: $USER"
 
 inside 'features' do
   copy_file 'styleguide.feature'
