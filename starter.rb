@@ -115,3 +115,11 @@ gsub_file 'app/assets/javascripts/application.js', /^\/\/\= require turbolinks$/
 
 # Add Refills
 # rails generate refills:import SNIPPET
+
+# Install Rspec + Cucumber
+run 'rails generate rspec:install'
+run 'rails generate cucumber:install'
+
+# if yes?('Install Rspec + Factory Girl? (y/n)')
+  
+# end
