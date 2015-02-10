@@ -1,3 +1,7 @@
+################################
+# SETUP
+################################
+
 # Create gemset
 run "rvm gemset create #{app_name}"
 
@@ -11,26 +15,30 @@ def source_paths
     [File.join(File.expand_path(File.dirname(__FILE__)),'rails_root')]
 end
 
-# Add gems
+# add database_example.yml for PG
+if yes?('Using PG database? (y/n)')
+  inside 'config' do
+    remove_file 'database.yml'
+    copy_file 'database_example.yml'
+  end
+end
+
+################################
+# GEMS
+################################
 
 gem 'haml-rails'
 gem 'normalize-rails'
 gem 'bourbon'
 gem 'neat'
 gem 'startmeup'
-gem 'refills'
 gem 'bluecloth'
-gem 'font-awesome-rails'
 gem 'devise'
 gem 'simple_form'
 gem 'draper'
-gem 'figaro', '~> 1.0.0'
 gem 'cancancan'
 gem 'puma'
 gem 'nav_lynx'
-gem "paperclip", "~> 4.2"
-gem 'aws-sdk'
-gem 'sweet-alert-confirm'
 gem 'kaminari'
 
 gem_group :development do
@@ -41,8 +49,6 @@ end
 
 gem_group :test do
   gem "email_spec"
-  gem "cucumber-rails", :require => false
-  gem 'rspec-rails', '3.1'
   gem 'spring'
   gem 'simplecov'
 end
@@ -60,50 +66,98 @@ gem_group :production, :staging do
   gem 'rails_12factor'
 end
 
-# remove turbolinks :)
+# remove turbolinks 
 gsub_file "Gemfile", /^gem\s+["']turbolinks["'].*$/,''
 
 # specify ruby
 insert_into_file 'Gemfile', "\nruby '2.1.2'", after: "source 'https://rubygems.org'\n"
 
+# remove public index.html
+remove_file "public/index.html"
+
+
+################################
+# INSTALLATIONS
+################################
+
 # install simpleform
 run "rails generate simple_form:install"
 
-# Install Rspec + Cucumber
-run 'rails generate rspec:install'
-# run 'bundle binstubs rspec-core'
-run 'rails generate cucumber:install'
-
-# install figaro
-run 'figaro install' 
-
-# config rspec
-inject_into_file 'config/application.rb', :after => "class Application < Rails::Application\n" do <<-'RUBY'
-  config.generators do |g|
-    g.test_framework :rspec, fixture: true
-    g.fixture_replacement :factory_girl, dir: 'spec/factories'
-    g.view_specs false
-    g.decorator_specs false
-    g.helper_specs false
-    g.stylesheets = false
-    g.javascripts = false
-    g.helper = false
+if yes?('Install Rspec? (y/n)')
+  gem 'rspec-rails', '3.1', :group => [:test]
+  run 'rails generate rspec:install'
+  # run 'bundle binstubs rspec-core'
+  # gsub_file ".rspec", /^\-\-warnings$/, "--format documentation\n"
+  # gsub_file ".rspec", /^\-\-warnings$/, '--require spec_helper'
+  insert_into_file '.rspec', "\n--format documentation", after: "--color" 
+  inject_into_file 'config/application.rb', :after => "class Application < Rails::Application\n" do <<-'RUBY'
+    config.generators do |g|
+      g.test_framework :rspec, fixture: true
+      g.fixture_replacement :factory_girl, dir: 'spec/factories'
+      g.view_specs false
+      g.decorator_specs false
+      g.helper_specs false
+      g.stylesheets = false
+      g.javascripts = false
+      g.helper = false
+    end
+  RUBY
   end
-RUBY
 end
 
-# gsub_file ".rspec", /^\-\-warnings$/, "--format documentation\n"
-# gsub_file ".rspec", /^\-\-warnings$/, '--require spec_helper'
-insert_into_file '.rspec', "\n--format documentation", after: "--color"
+if yes?('Install Cucumber? (y/n)')
+  gem "cucumber-rails", :require => false, :group => [:test]
+  run 'rails generate cucumber:install'
+  inside 'features' do
+    copy_file 'styleguide.feature'
+    inside 'step_definitions' do
+      copy_file 'styleguide_steps.rb'
+    end
+  end
+end
 
-# remove public index.html
-remove_file "public/index.html"
+if yes?('Install Font Awesome? (y/n)')
+  gem 'font-awesome-rails'
+end
+
+if yes?('Add Paperclip + AWS SDK? (y/n)')
+  gem "paperclip", "~> 4.2"
+  gem 'aws-sdk'
+  inject_into_file 'config/environments/production.rb', :after => "config.active_record.dump_schema_after_migration = false\n" do <<-'RUBY'
+  
+  config.paperclip_defaults = {
+    :storage => :s3,
+    :s3_credentials => {
+      :bucket => ENV['S3_BUCKET_NAME'],
+      :access_key_id => ENV['AWS_ACCESS_KEY_ID'],
+      :secret_access_key => ENV['AWS_SECRET_ACCESS_KEY']
+    }
+  }
+  RUBY
+  end
+  if yes?('Install Figaro for env vars? (y/n)')
+    gem 'figaro', '~> 1.0.0'
+    run 'figaro install' 
+    append_file 'config/application.yml' do <<-'RUBY'
+      production:
+        S3_BUCKET_NAME: ???
+        AWS_ACCESS_KEY_ID: ???
+        AWS_SECRET_ACCESS_KEY: ???
+    RUBY
+    end
+  end
+end
+
+
+################################
+# ASSETS
+################################
 
 # generate styleguide
 generate "controller", "styleguides index --no-helper --no-assets --no-view-specs --no-decorator-specs"
 route "root 'styleguides#index'"
 
-# add template files
+# add boilerplate files
 inside 'app' do
   inside 'views' do
     inside 'layouts' do
@@ -137,19 +191,22 @@ inside 'app' do
   end
 end
 
-if yes?('Using PG database? (y/n)')
-  inside 'config' do
-    remove_file 'database.yml'
-    copy_file 'database_example.yml'
+if yes?('Install Refills? (y/n)')
+  gem 'refills', :group => [:development]
+end
+
+if yes?('Install Sweet Alert? (y/n)')
+  gem 'sweet-alert-confirm'
+  inject_into_file 'app/assets/javascripts/application.js', :before => "//= require_tree .\n" do <<-'RUBY'
+//= require sweet-alert-confirm
+  RUBY
+  end
+  inject_into_file 'app/assets/stylesheets/application.css.sass', :after => "@import debug\n" do <<-'RUBY'
+@import sweet-alert
+  RUBY
   end
 end
 
-inside 'features' do
-  copy_file 'styleguide.feature'
-  inside 'step_definitions' do
-    copy_file 'styleguide_steps.rb'
-  end
-end
 
 # uncomment grid-settings sass for Neat
 gsub_file 'app/assets/stylesheets/base/_base.sass', /^\/\/ @import grid-settings$/, "@import grid-settings"
@@ -157,12 +214,6 @@ gsub_file 'app/assets/stylesheets/base/_base.sass', /^\/\/ @import grid-settings
 # remove turbolinks from application.js
 gsub_file 'app/assets/javascripts/application.js', /^\/\/\= require turbolinks$/, ""
 
-# Add Refills
-# rails generate refills:import SNIPPET
-
-# if yes?('Install Rspec + Factory Girl? (y/n)')
-  
-# end
 
 def run_bundle ; end
 

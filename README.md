@@ -14,10 +14,10 @@ TODO:
 
 * Devise (add as question?)
 * CanCanCan (add as question?)
-* Cucumber
-* Rspec
-* Refills
-* Figaro
+~~* Cucumber~~
+~~* Rspec~~
+~~* Refills~~
+~~* Figaro~~
 * Github (add as question?)
 * Heroku (add as question?)
 * Populate rake
