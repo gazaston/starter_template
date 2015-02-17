@@ -191,8 +191,8 @@ inside 'app' do
   end
 end
 
-if yes?('Install Refills? (y/n)')
-  gem 'refills', :group => [:development]
+if yes?('Install Breezeblocks? (y/n)')
+  gem 'breezeblocks', :group => [:development]
 end
 
 if yes?('Install Sweet Alert? (y/n)')
