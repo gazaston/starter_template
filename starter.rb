@@ -66,6 +66,8 @@ gem_group :production, :staging do
   gem 'rails_12factor'
 end
 
+run 'bundle'
+
 # remove turbolinks 
 gsub_file "Gemfile", /^gem\s+["']turbolinks["'].*$/,''
 
@@ -186,7 +188,7 @@ inside 'app' do
       remove_file 'application.css'
       copy_file 'application.css.sass'
       copy_file '_mixins.sass'
-      copy_file '_debug.sass'
+      # copy_file '_debug.sass'
     end
   end
 end
