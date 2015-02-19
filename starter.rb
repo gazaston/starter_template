@@ -233,7 +233,7 @@ say <<-postinstall
 
   $ rake db:create db:migrate
 
-  Remember, you can add Refills modules using generators (https://github.com/thoughtbot/refills#installation-for-ruby-on-rails)
+  Remember, you can add Breezeblocks modules using generators (https://github.com/wearefuturegov/breezeblocks#installation-for-ruby-on-rails)
 
   ============================================================================
 postinstall
