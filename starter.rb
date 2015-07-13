@@ -15,11 +15,11 @@ def source_paths
     [File.join(File.expand_path(File.dirname(__FILE__)),'rails_root')]
 end
 
-# add database_example.yml for PG
+# add database.yml for PG
 if yes?('Using PG database? (y/n)')
   inside 'config' do
     remove_file 'database.yml'
-    copy_file 'database_example.yml'
+    copy_file 'database.yml'
   end
 end
 
@@ -72,7 +72,7 @@ run 'bundle'
 gsub_file "Gemfile", /^gem\s+["']turbolinks["'].*$/,''
 
 # specify ruby
-insert_into_file 'Gemfile', "\nruby '2.1.2'", after: "source 'https://rubygems.org'\n"
+insert_into_file 'Gemfile', "\nruby '2.2.2'", after: "source 'https://rubygems.org'\n"
 
 # remove public index.html
 remove_file "public/index.html"
