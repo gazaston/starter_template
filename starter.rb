@@ -72,7 +72,7 @@ run 'bundle'
 gsub_file "Gemfile", /^gem\s+["']turbolinks["'].*$/,''
 
 # specify ruby
-insert_into_file 'Gemfile', "\nruby '2.2.2'", after: "source 'https://rubygems.org'\n"
+# insert_into_file 'Gemfile', "\nruby '2.2.2'", after: "source 'https://rubygems.org'\n"
 
 # remove public index.html
 remove_file "public/index.html"
@@ -86,7 +86,7 @@ remove_file "public/index.html"
 run "rails generate simple_form:install"
 
 if yes?('Install Rspec? (y/n)')
-  gem 'rspec-rails', '3.1', :group => [:test]
+  gem 'rspec-rails', '~> 3.0', :group => [:test]
   run 'rails generate rspec:install'
   # run 'bundle binstubs rspec-core'
   # gsub_file ".rspec", /^\-\-warnings$/, "--format documentation\n"
@@ -123,7 +123,7 @@ if yes?('Install Font Awesome? (y/n)')
 end
 
 if yes?('Add Paperclip + AWS SDK? (y/n)')
-  gem "paperclip", "~> 4.2"
+  gem "paperclip", "~> 4.3"
   gem 'aws-sdk'
   inject_into_file 'config/environments/production.rb', :after => "config.active_record.dump_schema_after_migration = false\n" do <<-'RUBY'
   
@@ -138,7 +138,7 @@ if yes?('Add Paperclip + AWS SDK? (y/n)')
   RUBY
   end
   if yes?('Install Figaro for env vars? (y/n)')
-    gem 'figaro', '~> 1.0.0'
+    gem 'figaro', '~> 1.1.1'
     run 'figaro install' 
     append_file 'config/application.yml' do <<-'RUBY'
       production:

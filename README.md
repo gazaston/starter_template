@@ -4,7 +4,7 @@
 
 From the directory containing the `starter_template` repo, start build with:
 
-`rails new myappname -d pg -m starter_template/starter.rb`
+`rails new myappname -d postgresql -m starter_template/starter.rb`
 
 or for an sqlite3 database:
 
